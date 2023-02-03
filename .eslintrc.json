@@ -1,0 +1,98 @@
+{
+  "env": {
+    "browser": true,
+    "es6": true
+  },
+  "overrides": [
+    {
+      "files": ["**/*.[jt]s?(x)"],
+      "rules": {
+        "react/jsx-no-undef": [
+          2,
+          {
+            "allowGlobals": true
+          }
+        ]
+      }
+    },
+    {
+      "files": ["*.ts", "*.tsx"],
+      "extends": [
+        "plugin:@typescript-eslint/recommended-requiring-type-checking"
+      ],
+      "parserOptions": {
+        "project": "tsconfig.json"
+      }
+    },
+    {
+      "files": [
+        "./cypress/**/*.ts",
+        "cypress.config.ts"
+      ],
+      "parserOptions": {
+        "project": "./cypress/tsconfig.json"
+      },
+      "extends": ["plugin:cypress/recommended"],
+      "rules": {
+        "testing-library/await-async-query": "off", // Cypress chains don't use promises
+        "testing-library/prefer-screen-queries": "off" // screen queries don't make sense in the context of Cypress Testing Library
+      }
+    }
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 11,
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "project": "./tsconfig.json"
+  },
+  "plugins": [
+    "react",
+    "@typescript-eslint",
+    "prettier"
+  ],
+  "extends": [
+    "eslint:recommended",
+    "next/core-web-vitals",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "ignorePatterns": [
+    "**/node_modules/*",
+    ".git/",
+    "src/gen/*"
+  ],
+  "rules": {
+    "@typescript-eslint/consistent-type-imports": "warn",
+    "no-console": "warn",
+    "import/first": "error",
+    "react/prop-types": "off",
+    "react/react-in-jsx-scope": "off",
+    "react-hooks/exhaustive-deps": "off",
+    "react-hooks/rules-of-hooks": "error",
+    "prettier/prettier": [
+      "error", {
+        "printWidth": 120,
+        "tabWidth": 2
+      }
+    ],
+    "@typescript-eslint/no-var-requires": 0,
+    "@typescript-eslint/explicit-module-boundary-types": 0,
+    "@typescript-eslint/no-unused-vars": 0,
+    "no-undef": 0,
+    "max-len": [
+      "error",
+      {
+        "code": 120,
+        "tabWidth": 2
+      }
+    ]
+  },
+  "settings": {
+    "react": {
+      "pragma": "React",
+      "version": "detect"
+    }
+  }
+}

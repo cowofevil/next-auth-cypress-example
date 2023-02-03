@@ -1,0 +1,134 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "sqlite"
+    // NOTE: When using postgresql, mysql or sqlserver, uncomment the @db.Text annotations in model Account below
+    // Further reading:
+    // https://next-auth.js.org/adapters/prisma#create-the-prisma-schema
+    // https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#string
+    url      = env("DATABASE_URL")
+}
+
+generator zod {
+    // Custom Zod schema generator from Prisma models.
+    // Further reading: https://github.com/chrishoermann/zod-prisma-types
+    provider                            = "zod-prisma-types"
+    output                              = "../src/gen/zodPrismaSchemas"
+    useInstanceOfForDecimal             = true // default is false
+    createInputTypes                    = false // default is true
+    createModelTypes                    = true // default is true
+    addInputTypeValidation              = false // default is true
+    useDefaultValidators                = false // default is true
+    createOptionalDefaultValuesTypes    = false // default is false
+}
+
+model Example {
+    id        String   @id @default(uuid())
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model Tag {
+    id          String      @id                         @default(uuid())
+    label       String      // @db.Text
+    createdAt   DateTime    @map(name: "created_at")    @default(now())
+    updatedAt   DateTime    @map(name: "updated_at")    @updatedAt
+
+    // Relations
+    notes       TagsOnNotes[]
+
+    @@map("tags")
+}
+
+model Note {
+    id          String      @id @default(uuid())
+    title       String      // @db.Text
+    markdown    String      // @db.Text
+    createdAt   DateTime    @map(name: "created_at")    @default(now())
+    updatedAt   DateTime    @map(name: "updated_at")    @updatedAt
+
+    // Relations
+    tags        TagsOnNotes[]
+
+    @@map("notes")
+}
+
+model TagsOnNotes {
+  createdAt     DateTime    @map(name: "created_at")      @default(now())
+  updatedAt     DateTime    @map(name: "updated_at")      @updatedAt
+  tagId         String      @map(name: "tag_id")
+  noteId        String      @map(name: "note_id")
+
+  // Relations
+  tag           Tag         @relation(fields: [tagId], references: [id], onDelete: Cascade)
+  note          Note        @relation(fields: [noteId], references: [id], onDelete: Cascade)
+
+  @@id([tagId, noteId])
+  @@map("tags_on_notes")
+}
+
+// Necessary for Next auth
+model Account {
+  id                  String    @id                                 @default(uuid())
+  type                String
+  provider            String
+  providerAccountId   String    @map(name: "provider_account_id")
+  refresh_token       String?   // @db.Text
+  access_token        String?   // @db.Text
+  id_token            String?   // @db.Text
+  token_type          String?
+  scope               String?
+  session_state       String?
+  expires_at          Int?
+  createdAt           DateTime  @map(name: "created_at")            @default(now())
+  updatedAt           DateTime  @map(name: "updated_at")            @updatedAt
+  userId              String    @map(name: "user_id")
+
+  // Relations
+  user                User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model Session {
+    id           String     @id           @default(uuid())
+    sessionToken String     @unique       @map(name: "session_token")
+    userId       String
+    expires      DateTime
+
+    // Relations
+    user         User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@map("sessions")
+}
+
+model User {
+  id                String      @id                           @default(uuid())
+  name              String?
+  email             String?     @unique
+  emailVerified     DateTime?   @map(name: "email_verified")
+  image             String?
+  createdAt         DateTime    @map(name: "created_at")      @default(now())
+  updatedAt         DateTime    @map(name: "updated_at")      @updatedAt
+
+  // Relations
+  accounts          Account[]
+  sessions          Session[]
+
+  @@map("users")
+}
+
+model VerificationToken {
+  identifier  String
+  token       String     @unique
+  expires     DateTime
+
+  @@unique([identifier, token])
+  @@map("verificationtokens")
+}
