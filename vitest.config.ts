@@ -9,6 +9,7 @@ export default defineConfig({
   test: {
     environment: "prisma",
     environmentOptions: {
+      adapter: "sqlite",
       envFile: ".env.test",
     },
     exclude: ["./cypress", "./node_modules"],

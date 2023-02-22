@@ -1,1 +1,0 @@
-export { zObject } from "./interfaceToZod";
