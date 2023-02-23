@@ -1,0 +1,13 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Unit Tests" type="JavaScriptTestRunnerVitest">
+    <config value="$PROJECT_DIR$/vitest.config.ts" />
+    <node-interpreter value="project" />
+    <node-options value="-r dotenv/config" />
+    <vitest-package value="$PROJECT_DIR$/node_modules/vitest" />
+    <working-dir value="$PROJECT_DIR$" />
+    <vitest-options value="--no-watch" />
+    <envs />
+    <scope-kind value="ALL" />
+    <method v="2" />
+  </configuration>
+</component>
