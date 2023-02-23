@@ -14,7 +14,13 @@ export function NavBar() {
           Note Taker
         </Navbar.Brand>
         {status === "authenticated" && (
-          <Button className="d-flex" variant="outline-success" onClick={() => void signOut()}>
+          <Button
+            aria-label="logout-button"
+            id="LogoutButton"
+            className="d-flex"
+            variant="outline-success"
+            onClick={() => void signOut()}
+          >
             Logout
           </Button>
         )}

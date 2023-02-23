@@ -1,0 +1,14 @@
+{
+  "include": [
+    "./**/*.ts",
+    "../cypress.config.ts"
+  ],
+  "compilerOptions": {
+    "types": ["cypress", "@percy/cypress", "@testing-library/cypress"],
+    "lib": ["es2015", "dom"],
+    "isolatedModules": false,
+    "esModuleInterop": true,
+    "allowJs": true,
+    "noEmit": true
+  }
+}
