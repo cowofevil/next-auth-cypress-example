@@ -1,8 +1,8 @@
 /// <reference types="vitest" />
-import * as dotenv from "dotenv";
+import { loadEnvConfig } from "@next/env";
 import { defineConfig } from "vitest/config";
 
-dotenv.config(); // load env vars from .env
+loadEnvConfig(process.cwd()); // load env vars from .env and .env.test
 
 // https://vitest.dev/config/#configuration
 export default defineConfig({

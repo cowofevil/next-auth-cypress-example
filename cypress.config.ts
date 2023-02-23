@@ -1,13 +1,11 @@
-import { tmpdir } from "os";
-import * as dotenv from "dotenv";
 import { defineConfig } from "cypress";
+import { loadEnvConfig } from "@next/env";
 
-dotenv.config({ path: ".env.test" });
-dotenv.config();
+loadEnvConfig(process.cwd());
 
 export default defineConfig({
   env: {
-    database_url: `file:${tmpdir()}/${process.env.DATABASE_NAME}.sqlite`,
+    database_url: process.env.DATABASE_URL,
     next_auth_secret: process.env.NEXTAUTH_SECRET,
     mobileViewportWidthBreakpoint: 414,
   },
