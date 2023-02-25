@@ -6,7 +6,7 @@ loadEnvConfig(process.cwd());
 export default defineConfig({
   env: {
     database_url: process.env.DATABASE_URL,
-    next_auth_secret: process.env.NEXTAUTH_SECRET,
+    nextauth_secret: process.env.NEXTAUTH_SECRET,
     mobileViewportWidthBreakpoint: 414,
   },
   e2e: {

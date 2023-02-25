@@ -17,7 +17,7 @@ const Login: NextPage = () => {
               <Card.Text>Before you can take notes you must first login!</Card.Text>
             </Card.Body>
             <Card.Footer className="d-flex justify-content-center">
-              <Button variant="primary" onClick={() => handleLoginClick()}>
+              <Button aria-label="login-button" variant="primary" onClick={() => handleLoginClick()}>
                 Login
               </Button>
             </Card.Footer>

@@ -51,9 +51,15 @@ export function NoteList({ availableTags, notes, onUpdateTag, onDeleteTag }: Not
         <Col xs="auto">
           <Stack gap={2} direction="horizontal">
             <NextLink href="/new" passHref>
-              <Button variant="primary">Create</Button>
+              <Button aria-label="create-note-button" variant="primary">
+                Create
+              </Button>
             </NextLink>
-            <Button onClick={() => setEditTagsModalIsOpen(true)} variant="outline-secondary">
+            <Button
+              aria-label="edit-tags-button"
+              onClick={() => setEditTagsModalIsOpen(true)}
+              variant="outline-secondary"
+            >
               Edit Tags
             </Button>
           </Stack>
@@ -64,13 +70,19 @@ export function NoteList({ availableTags, notes, onUpdateTag, onDeleteTag }: Not
           <Col>
             <Form.Group controlId="title">
               <Form.Label>Title</Form.Label>
-              <Form.Control type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
+              <Form.Control
+                aria-label="search-by-title-input"
+                type="text"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+              />
             </Form.Group>
           </Col>
           <Col>
             <Form.Group controlId="tags">
               <Form.Label>Tags</Form.Label>
               <ReactSelect
+                aria-label="search-by-tag-dropdown"
                 value={selectedTags.map((tag) => {
                   return { label: tag.label, value: tag.id };
                 })}
@@ -110,8 +122,13 @@ export function NoteList({ availableTags, notes, onUpdateTag, onDeleteTag }: Not
 
 function NoteCard({ id, title, tags }: SimplifiedNote) {
   return (
-    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-    <Card as={Link} href={`/${id}`} className={`h-100 text-reset text-decoration-none ${styles.card}`}>
+    <Card
+      as={Link}
+      href={`/${id}`}
+      aria-label="note-card"
+      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+      className={`h-100 text-reset text-decoration-none ${styles.card}`}
+    >
       <Card.Body>
         <Stack gap={2} className="align-items-center justify-content-center h-100">
           <span className="fs-5">{title}</span>
@@ -144,13 +161,18 @@ function EditTagsModal({ availableTags, handleClose, show, onDeleteTag, onUpdate
               <Row key={tag.id}>
                 <Col>
                   <Form.Control
+                    aria-label={`edit-${tag.label ?? ""}-tag-input`}
                     type="text"
                     value={tag.label}
                     onChange={(e) => onUpdateTag(tag.id ?? "", e.target.value)}
                   />
                 </Col>
                 <Col xs="auto">
-                  <Button onClick={() => onDeleteTag(tag.id ?? "")} variant="outline-danger">
+                  <Button
+                    aria-label={`delete-${tag.label ?? ""}-tag-button`}
+                    onClick={() => onDeleteTag(tag.id ?? "")}
+                    variant="outline-danger"
+                  >
                     &times;
                   </Button>
                 </Col>

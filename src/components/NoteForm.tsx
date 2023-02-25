@@ -51,13 +51,14 @@ export function NoteForm({ onSubmit, id = "", title = "", markdown = "", tags = 
           <Col>
             <Form.Group controlId="title">
               <Form.Label>Title</Form.Label>
-              <Form.Control ref={titleRef} required defaultValue={title} />
+              <Form.Control aria-label="note-title-input" ref={titleRef} required defaultValue={title} />
             </Form.Group>
           </Col>
           <Col>
             <Form.Group controlId="tags">
               <Form.Label>Tags</Form.Label>
               <CreatableReactSelect
+                aria-label="select-tags-dropdown"
                 onCreateOption={(label) => {
                   createTagMutation.mutate({ label, noteIds: [] });
                 }}
@@ -81,14 +82,21 @@ export function NoteForm({ onSubmit, id = "", title = "", markdown = "", tags = 
         </Row>
         <Form.Group controlId="markdown">
           <Form.Label>Body</Form.Label>
-          <Form.Control defaultValue={markdown} required as="textarea" ref={markdownRef} rows={15} />
+          <Form.Control
+            aria-label="note-body-input"
+            defaultValue={markdown}
+            required
+            as="textarea"
+            ref={markdownRef}
+            rows={15}
+          />
         </Form.Group>
         <Stack direction="horizontal" gap={2} className="justify-content-end">
-          <Button type="submit" variant="primary">
+          <Button aria-label="save-button" type="submit" variant="primary">
             Save
           </Button>
           <NextLink href=".." passHref>
-            <Button type="button" variant="outline-secondary">
+            <Button aria-label="cancel-button" type="button" variant="outline-secondary">
               Cancel
             </Button>
           </NextLink>

@@ -37,9 +37,12 @@ export function Note({ id, onDelete }: NoteProps) {
         <Col xs="auto">
           <Stack gap={2} direction="horizontal">
             <NextLink href={`/${noteQuery?.data?.id ?? ""}/edit`} passHref>
-              <Button variant="primary">Edit</Button>
+              <Button aria-label="edit-button" variant="primary">
+                Edit
+              </Button>
             </NextLink>
             <Button
+              aria-label="delete-button"
               onClick={() => {
                 onDelete(noteQuery?.data?.id ?? "");
                 void router.push("/");
@@ -49,7 +52,9 @@ export function Note({ id, onDelete }: NoteProps) {
               Delete
             </Button>
             <NextLink href="/" passHref>
-              <Button variant="outline-secondary">Back</Button>
+              <Button aria-label="back-button" variant="outline-secondary">
+                Back
+              </Button>
             </NextLink>
           </Stack>
         </Col>

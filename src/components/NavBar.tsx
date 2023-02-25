@@ -16,7 +16,6 @@ export function NavBar() {
         {status === "authenticated" && (
           <Button
             aria-label="logout-button"
-            id="LogoutButton"
             className="d-flex"
             variant="outline-success"
             onClick={() => void signOut()}

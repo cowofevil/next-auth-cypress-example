@@ -39,7 +39,7 @@ Cypress.Commands.add("loginNextAuth", ({ userId, name, email, provider }: loginN
   cy.wrap(null, { log: false }).then(() => {
     return new Cypress.Promise(async (resolve, reject) => {
       try {
-        const encryptedCookieValue = await encode({ token: cookieValue, secret: Cypress.env("next_auth_secret") });
+        const encryptedCookieValue = await encode({ token: cookieValue, secret: Cypress.env("nextauth_secret") });
 
         cy.setCookie(cookieName, encryptedCookieValue, {
           log: false,
