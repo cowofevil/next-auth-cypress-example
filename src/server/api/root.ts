@@ -1,5 +1,6 @@
 import { createTRPCRouter } from "./trpc";
-import { notesRouter } from "./routers/notes";
+import { tagRouter } from "./routers/tag";
+import { noteRouter } from "./routers/note";
 
 /**
  * This is the primary router for your server.
@@ -7,7 +8,8 @@ import { notesRouter } from "./routers/notes";
  * All routers added in /api/routers should be manually added here
  */
 export const appRouter = createTRPCRouter({
-  notes: notesRouter,
+  note: noteRouter,
+  tag: tagRouter,
 });
 
 // export type definition of API

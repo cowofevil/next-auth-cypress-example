@@ -1,5 +1,7 @@
 import type { Prisma } from "@prisma/client";
 
+export const dummyUUID = "00000000-0000-0000-0000-000000000000";
+
 export const tagData: Prisma.TagCreateInput[] = [
   {
     id: "2b01cd4b-90a1-41eb-a998-ee4751f6d388",

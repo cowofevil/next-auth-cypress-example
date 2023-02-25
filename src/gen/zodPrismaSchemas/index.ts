@@ -10,11 +10,7 @@ import * as PrismaClient from "@prisma/client";
 
 export const AccountScalarFieldEnumSchema = z.nativeEnum(PrismaClient.Prisma.AccountScalarFieldEnum);
 
-export const ExampleScalarFieldEnumSchema = z.nativeEnum(PrismaClient.Prisma.ExampleScalarFieldEnum);
-
 export const NoteScalarFieldEnumSchema = z.nativeEnum(PrismaClient.Prisma.NoteScalarFieldEnum);
-
-export const SessionScalarFieldEnumSchema = z.nativeEnum(PrismaClient.Prisma.SessionScalarFieldEnum);
 
 export const SortOrderSchema = z.nativeEnum(PrismaClient.Prisma.SortOrder);
 
@@ -34,15 +30,6 @@ export const VerificationTokenScalarFieldEnumSchema = z.nativeEnum(PrismaClient.
 /////////////////////////////////////////
 // MODELS
 /////////////////////////////////////////
-
-// EXAMPLE
-//------------------------------------------------------
-
-export const ExampleSchema = z.object({
-  id: z.string(),
-  createdAt: z.date(),
-  updatedAt: z.date(),
-});
 
 // TAG
 //------------------------------------------------------
@@ -93,16 +80,6 @@ export const AccountSchema = z.object({
   createdAt: z.date(),
   updatedAt: z.date(),
   userId: z.string(),
-});
-
-// SESSION
-//------------------------------------------------------
-
-export const SessionSchema = z.object({
-  id: z.string(),
-  sessionToken: z.string(),
-  userId: z.string(),
-  expires: z.date(),
 });
 
 // USER
