@@ -1,0 +1,41 @@
+name: Pull Request
+
+on:
+  pull_request:
+    branches: [ main ]
+
+env:
+  DATABASE_NAME: ${{ vars.DATABASE_NAME }}
+  DATABASE_URL: ${{ vars.DATABASE_URL }}
+  NEXTAUTH_URL: ${{ vars.NEXTAUTH_URL }}
+  NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
+  DISCORD_CLIENT_ID: ${{ secrets.DISCORD_CLIENT_ID }}
+  DISCORD_CLIENT_SECRET: ${{ secrets.DISCORD_CLIENT_SECRET }}
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    environment: pull_request
+
+    steps:
+      - name: Git Checkout
+        uses: actions/checkout@v3
+      - name: Set up NodeJS
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm clean-install --legacy-peer-deps
+      - name: Run Linter
+        run: npm run lint
+      - name: Run Unit Tests
+        run: npm run test-unit-ci
+      - name: Build Web App
+        run: npm run build
+      - name: Initialize Database
+        run: npm run push-db-reset
+      - name: Start Web Server
+        run: nohup npm run start </dev/null >/dev/null 2>&1 &
+      - name: Run End-to-end Tests
+        run: npm run test-e2e
