@@ -38,4 +38,4 @@ jobs:
       - name: Start Web Server
         run: nohup npm run start </dev/null >/dev/null 2>&1 &
       - name: Run End-to-end Tests
-        run: npm run test-e2e
+        run: npm run test-e2e-ci

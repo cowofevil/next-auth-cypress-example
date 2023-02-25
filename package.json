@@ -13,6 +13,7 @@
     "test-unit-ci": "vitest --run",
     "coverage-unit": "vitest run --coverage",
     "test-e2e": "cypress run",
+    "test-e2e-ci": "cypress run --config video=false",
     "cypress-open": "cypress open",
     "regen": "test -f .env && export $(cat .env | grep -v '#' | sed 's/\\r$//' | awk '/=/ {print $1}' ); npx prisma generate",
     "push-db-reset": "test -f .env && export $(cat .env | grep -v '#' | sed 's/\\r$//' | awk '/=/ {print $1}' ); npx prisma db push --force-reset --accept-data-loss --skip-generate",
