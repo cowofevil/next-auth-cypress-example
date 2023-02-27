@@ -1,28 +1,89 @@
-# Create T3 App
+# NextAuth Cypress Example
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+This is an example app for demonstrating how to execute Cypress end-to-end tests against a web app that is secured with
+[NextAuth][nextauth] using the [JWT session strategy][nextauth_jwt_session]. Refer to the 
+[Cypress End-to-end Testing NextAuth Secured Web Apps][cypress_nextauth_article] for detailed information on how to
+setup Cypress for your own NextAuth secured web app.
 
-## What's next? How do I make an app with this?
+## Acknowledgments
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+This example project is based on the [react-note-taking-app][react-note-taking-app] built on top of the 
+[T3 Stack][t3_stack].
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+Also, the following projects also heavily influenced this example app:
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+- [cypress-realworld-app][cypress-realworld-app]
+- [vitest-environment-prisma][vitest-environment-prisma]
 
-## Learn More
+## Prerequisites
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+- [Node.js][node] 16.14.2+ LTS
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+## Developer Quickstart Guide
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+The following sections covers how to get a functioning development environment running.
 
-## How do I deploy this?
+### Create a Node.js Environment
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+```shell
+$ npm install
+```
+
+### Configure Environment Variables
+
+Create an environment file [`.env`][nextjs_env_local] (`.env.example` template provided) at the root of the repo 
+directory and add the following environment variables:
+
+| Environ Variable Name   |      Default Value      | Description                                            |
+|:------------------------|:-----------------------:|:-------------------------------------------------------|
+| `NEXTAUTH_URL`          | `http://localhost:3000` | [General next-auth configuration.][nextauth_url]       |
+| `NEXTAUTH_SECRET`       |                         | [General next-auth configuration.][nextauth_secret]    |
+| `DATABASE_URL`          |   `file:./db.sqlite`    | [Prisma configuration.][prisma_database_url]           |
+| `DISCORD_CLIENT_ID`     |                         | [Configure NextAuth to use Discord.][discord_provider] |
+| `DISCORD_CLIENT_SECRET` |                         | [Configure NextAuth to use Discord.][discord_provider] |
+
+### Development Scripts
+
+Setup the SQLite database:
+
+```shell
+$ npm run reset-seed
+```
+
+Start the dev server by running the script:
+
+```shell
+$ npm run dev
+```
+
+Build and run the Next.js server locally:
+
+```shell
+$ npm run build
+$ npm run start
+```
+
+### Unit Testing
+
+A pre-requisite for running the included unit tests is to create a `.env.test` file in the root directory with the
+`DATABASE_NAME` variable set. An example `.env.test.example` file has been provided that you can simply copy and rename.
+
+Execute unit tests by running the script:
+
+```shell
+$ npm run test-unit-ci
+```
+
+[nextauth]: https://next-auth.js.org
+[nextauth_jwt_session]: https://next-auth.js.org/configuration/options#session
+[cypress_nextauth_article]: https://dev.to/cowofevil/cypress-end-to-end-testing-for-web-apps-secured-by-nextauth-3p3p-temp-slug-7804096?preview=61d086251deab33d783130d456a7bb0fb3a024029497c6e0dea9a955389845b934f9a1c5591e987b6bfb1ec18528caa7473d004620393cbe045b7434
+[react-note-taking-app]: https://www.youtube.com/watch?v=j898RGRw0b4&t=342s
+[t3_stack]: https://create.t3.gg/
+[cypress-realworld-app]: https://github.com/cypress-io/cypress-realworld-app
+[vitest-environment-prisma]: https://github.com/carlos8v/vitest-environment-prisma
+[node]: https://nodejs.org/
+[nextjs_env_local]: https://nextjs.org/docs/basic-features/environment-variables#loading-environment-variables
+[nextauth_url]: https://next-auth.js.org/configuration/options#nextauth_url
+[nextauth_secret]: https://next-auth.js.org/configuration/options#nextauth_secret
+[prisma_database_url]: https://www.prisma.io/docs/guides/development-environment/environment-variables#example-set-the-database_url-environment-variable-in-an-env-file
+[discord_provider]: https://create.t3.gg/en/usage/next-auth/#setting-up-the-default-discordprovider
