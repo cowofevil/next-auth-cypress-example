@@ -2,7 +2,7 @@
 
 This is an example app for demonstrating how to execute Cypress end-to-end tests against a web app that is secured with
 [NextAuth][nextauth] using the [JWT session strategy][nextauth_jwt_session]. Refer to the 
-[Cypress End-to-end Testing NextAuth Secured Web Apps][cypress_nextauth_article] for detailed information on how to
+[Speed Up Cypress Testing of NextAuth Secured Web Apps][cypress_nextauth_article] for detailed information on how to
 setup Cypress for your own NextAuth secured web app.
 
 ## Acknowledgments
@@ -76,7 +76,7 @@ $ npm run test-unit-ci
 
 [nextauth]: https://next-auth.js.org
 [nextauth_jwt_session]: https://next-auth.js.org/configuration/options#session
-[cypress_nextauth_article]: https://dev.to/cowofevil/cypress-end-to-end-testing-for-web-apps-secured-by-nextauth-3p3p-temp-slug-7804096?preview=61d086251deab33d783130d456a7bb0fb3a024029497c6e0dea9a955389845b934f9a1c5591e987b6bfb1ec18528caa7473d004620393cbe045b7434
+[cypress_nextauth_article]: https://dev.to/cowofevil/speed-up-cypress-testing-of-nextauth-secured-web-apps-10a0
 [react-note-taking-app]: https://www.youtube.com/watch?v=j898RGRw0b4&t=342s
 [t3_stack]: https://create.t3.gg/
 [cypress-realworld-app]: https://github.com/cypress-io/cypress-realworld-app

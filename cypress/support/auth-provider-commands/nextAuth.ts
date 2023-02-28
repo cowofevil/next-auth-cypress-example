@@ -2,8 +2,7 @@
 @typescript-eslint/no-unsafe-member-access,
 @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-return,
 @typescript-eslint/no-unsafe-assignment,
-@typescript-eslint/no-misused-promises,
-no-console */
+@typescript-eslint/no-misused-promises */
 import { v4 as uuidv4 } from "uuid";
 import { encode } from "next-auth/jwt";
 import type { JWT } from "next-auth/jwt";
@@ -33,8 +32,6 @@ Cypress.Commands.add("loginNextAuth", ({ userId, name, email, provider }: loginN
     jti: uuidv4(),
   };
 
-  console.log("Unencrypted next-auth.session-token:", cookieValue);
-
   // https://docs.cypress.io/api/utilities/promise#Waiting-for-Promises
   cy.wrap(null, { log: false }).then(() => {
     return new Cypress.Promise(async (resolve, reject) => {
@@ -50,6 +47,7 @@ Cypress.Commands.add("loginNextAuth", ({ userId, name, email, provider }: loginN
 
         resolve();
       } catch (err) {
+        // eslint-disable-next-line no-console
         console.error(err);
         reject();
       }

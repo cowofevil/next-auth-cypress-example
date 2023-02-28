@@ -1,15 +1,12 @@
+import { testCreds } from "../support/testData";
+
 describe("given an unauthenticated session", () => {
   before(() => {
     cy.resetDatabase();
   });
 
   beforeEach(() => {
-    cy.loginNextAuth({
-      userId: "3abd5c17-7f80-4a3e-8c3e-7a24e0185aea",
-      name: "bobby",
-      email: "bobby@mcbobby.com",
-      provider: "discord",
-    });
+    cy.loginNextAuth(testCreds);
 
     cy.visit("/");
   });
@@ -20,5 +17,3 @@ describe("given an unauthenticated session", () => {
     });
   });
 });
-
-export {};
