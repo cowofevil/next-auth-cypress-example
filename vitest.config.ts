@@ -13,5 +13,9 @@ export default defineConfig({
       envFile: ".env.test",
     },
     exclude: ["./cypress", "./node_modules"],
+    coverage: {
+      provider: "c8",
+      reporter: ["text", "lcov"],
+    },
   },
 });
