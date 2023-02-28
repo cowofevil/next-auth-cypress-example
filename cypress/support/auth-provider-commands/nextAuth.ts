@@ -33,8 +33,6 @@ Cypress.Commands.add("loginNextAuth", ({ userId, name, email, provider }: loginN
     jti: uuidv4(),
   };
 
-  console.log("Unencrypted next-auth.session-token:", cookieValue);
-
   // https://docs.cypress.io/api/utilities/promise#Waiting-for-Promises
   cy.wrap(null, { log: false }).then(() => {
     return new Cypress.Promise(async (resolve, reject) => {
