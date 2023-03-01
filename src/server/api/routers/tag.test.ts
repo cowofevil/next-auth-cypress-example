@@ -4,29 +4,23 @@ import { appRouter, type AppRouter } from "../root";
 import { type inferProcedureInput } from "@trpc/server";
 import { seedDatabase, flushDatabase } from "../../../../test";
 import { dummyUUID, noteData, tagData } from "../../../../test";
-import { describe, expect, test, beforeEach, afterEach, vi } from "vitest";
-
-afterEach(() => {
-  vi.restoreAllMocks();
-});
+import { describe, expect, test, beforeEach, afterEach } from "vitest";
 
 describe("given executing the 'create' procedure of the 'tag' tRPC router", () => {
   describe("when providing valid input WITHOUT any 'noteIds' specified", () => {
     test("it should successfully create a new tag WITHOUT any 'note' relations", async () => {
-      vi.mock("../trpc", async () => {
-        const actual = await vi.importActual("../trpc");
-
-        /* eslint-disable */
-        return {
-          // @ts-expect-error actual is definitely an object!
-          ...actual,
-          // @ts-expect-error actual is definitely an object!
-          protectedProcedure: actual.publicProcedure, // unprotect a protected tRPC procedure
-        };
-        /* eslint-enable */
+      const user = await prisma.user.upsert({
+        where: { email: "test@test.com" },
+        create: { name: "test", email: "test@test.com", image: "" },
+        update: {},
       });
 
-      const ctx = createInnerTRPCContext({ session: null });
+      const ctx = createInnerTRPCContext({
+        session: {
+          user,
+          expires: "1",
+        },
+      });
       const caller = appRouter.createCaller(ctx);
 
       type Input = inferProcedureInput<AppRouter["tag"]["create"]>;
@@ -52,20 +46,18 @@ describe("given executing the 'create' procedure of the 'tag' tRPC router", () =
     });
 
     test("it should successfully create a new tag WITH all 'tag' relations", async () => {
-      vi.mock("../trpc", async () => {
-        const actual = await vi.importActual("../trpc");
-
-        /* eslint-disable */
-        return {
-          // @ts-expect-error actual is definitely an object!
-          ...actual,
-          // @ts-expect-error actual is definitely an object!
-          protectedProcedure: actual.publicProcedure, // unprotect a protected tRPC procedure
-        };
-        /* eslint-enable */
+      const user = await prisma.user.upsert({
+        where: { email: "test@test.com" },
+        create: { name: "test", email: "test@test.com", image: "" },
+        update: {},
       });
 
-      const ctx = createInnerTRPCContext({ session: null });
+      const ctx = createInnerTRPCContext({
+        session: {
+          user,
+          expires: "1",
+        },
+      });
       const caller = appRouter.createCaller(ctx);
 
       type Input = inferProcedureInput<AppRouter["tag"]["create"]>;
@@ -94,20 +86,18 @@ describe("given executing the 'create' procedure of the 'tag' tRPC router", () =
     });
 
     test("it should fail gracefully with an appropriate error message", async () => {
-      vi.mock("../trpc", async () => {
-        const actual = await vi.importActual("../trpc");
-
-        /* eslint-disable */
-        return {
-          // @ts-expect-error actual is definitely an object!
-          ...actual,
-          // @ts-expect-error actual is definitely an object!
-          protectedProcedure: actual.publicProcedure, // unprotect a protected tRPC procedure
-        };
-        /* eslint-enable */
+      const user = await prisma.user.upsert({
+        where: { email: "test@test.com" },
+        create: { name: "test", email: "test@test.com", image: "" },
+        update: {},
       });
 
-      const ctx = createInnerTRPCContext({ session: null });
+      const ctx = createInnerTRPCContext({
+        session: {
+          user,
+          expires: "1",
+        },
+      });
       const caller = appRouter.createCaller(ctx);
 
       type Input = inferProcedureInput<AppRouter["tag"]["create"]>;
@@ -133,20 +123,18 @@ describe("given executing the 'get' procedure of the 'tag' tRPC router", () => {
 
   describe("when providing valid tag ID and specifying NOT to include related notes", () => {
     test("it should successfully retrieve the correct tag WITHOUT any notes included in the response", async () => {
-      vi.mock("../trpc", async () => {
-        const actual = await vi.importActual("../trpc");
-
-        /* eslint-disable */
-        return {
-          // @ts-expect-error actual is definitely an object!
-          ...actual,
-          // @ts-expect-error actual is definitely an object!
-          protectedProcedure: actual.publicProcedure, // unprotect a protected tRPC procedure
-        };
-        /* eslint-enable */
+      const user = await prisma.user.upsert({
+        where: { email: "test@test.com" },
+        create: { name: "test", email: "test@test.com", image: "" },
+        update: {},
       });
 
-      const ctx = createInnerTRPCContext({ session: null });
+      const ctx = createInnerTRPCContext({
+        session: {
+          user,
+          expires: "1",
+        },
+      });
       const caller = appRouter.createCaller(ctx);
 
       type Input = inferProcedureInput<AppRouter["tag"]["get"]>;
@@ -164,20 +152,18 @@ describe("given executing the 'get' procedure of the 'tag' tRPC router", () => {
 
   describe("when providing valid tag ID and specifying to INCLUDE related notes", () => {
     test("it should successfully retrieve the correct tag WITH any notes INCLUDED in the response", async () => {
-      vi.mock("../trpc", async () => {
-        const actual = await vi.importActual("../trpc");
-
-        /* eslint-disable */
-        return {
-          // @ts-expect-error actual is definitely an object!
-          ...actual,
-          // @ts-expect-error actual is definitely an object!
-          protectedProcedure: actual.publicProcedure, // unprotect a protected tRPC procedure
-        };
-        /* eslint-enable */
+      const user = await prisma.user.upsert({
+        where: { email: "test@test.com" },
+        create: { name: "test", email: "test@test.com", image: "" },
+        update: {},
       });
 
-      const ctx = createInnerTRPCContext({ session: null });
+      const ctx = createInnerTRPCContext({
+        session: {
+          user,
+          expires: "1",
+        },
+      });
       const caller = appRouter.createCaller(ctx);
 
       type Input = inferProcedureInput<AppRouter["tag"]["get"]>;
@@ -196,20 +182,18 @@ describe("given executing the 'get' procedure of the 'tag' tRPC router", () => {
 
   describe("when providing an INVALID tag ID", () => {
     test("it should fail gracefully with an appropriate error message", async () => {
-      vi.mock("../trpc", async () => {
-        const actual = await vi.importActual("../trpc");
-
-        /* eslint-disable */
-        return {
-          // @ts-expect-error actual is definitely an object!
-          ...actual,
-          // @ts-expect-error actual is definitely an object!
-          protectedProcedure: actual.publicProcedure, // unprotect a protected tRPC procedure
-        };
-        /* eslint-enable */
+      const user = await prisma.user.upsert({
+        where: { email: "test@test.com" },
+        create: { name: "test", email: "test@test.com", image: "" },
+        update: {},
       });
 
-      const ctx = createInnerTRPCContext({ session: null });
+      const ctx = createInnerTRPCContext({
+        session: {
+          user,
+          expires: "1",
+        },
+      });
       const caller = appRouter.createCaller(ctx);
 
       type Input = inferProcedureInput<AppRouter["tag"]["get"]>;
@@ -234,20 +218,18 @@ describe("given executing the 'getAll' procedure of the 'tag' tRPC router", () =
 
   describe("when multiple valid tags exist in the database and specifying NOT to include related notes", () => {
     test("it should successfully retrieve all the tags WITHOUT any notes included in the response", async () => {
-      vi.mock("../trpc", async () => {
-        const actual = await vi.importActual("../trpc");
-
-        /* eslint-disable */
-        return {
-          // @ts-expect-error actual is definitely an object!
-          ...actual,
-          // @ts-expect-error actual is definitely an object!
-          protectedProcedure: actual.publicProcedure, // unprotect a protected tRPC procedure
-        };
-        /* eslint-enable */
+      const user = await prisma.user.upsert({
+        where: { email: "test@test.com" },
+        create: { name: "test", email: "test@test.com", image: "" },
+        update: {},
       });
 
-      const ctx = createInnerTRPCContext({ session: null });
+      const ctx = createInnerTRPCContext({
+        session: {
+          user,
+          expires: "1",
+        },
+      });
       const caller = appRouter.createCaller(ctx);
 
       const res = await caller.tag.getAll({ includeRelations: false });
@@ -263,20 +245,18 @@ describe("given executing the 'getAll' procedure of the 'tag' tRPC router", () =
 
   describe("when multiple valid tags exist in the database and specifying to INCLUDE related notes", () => {
     test("it should successfully retrieve all the tags WITH any notes INCLUDED in the response", async () => {
-      vi.mock("../trpc", async () => {
-        const actual = await vi.importActual("../trpc");
-
-        /* eslint-disable */
-        return {
-          // @ts-expect-error actual is definitely an object!
-          ...actual,
-          // @ts-expect-error actual is definitely an object!
-          protectedProcedure: actual.publicProcedure, // unprotect a protected tRPC procedure
-        };
-        /* eslint-enable */
+      const user = await prisma.user.upsert({
+        where: { email: "test@test.com" },
+        create: { name: "test", email: "test@test.com", image: "" },
+        update: {},
       });
 
-      const ctx = createInnerTRPCContext({ session: null });
+      const ctx = createInnerTRPCContext({
+        session: {
+          user,
+          expires: "1",
+        },
+      });
       const caller = appRouter.createCaller(ctx);
 
       const res = await caller.tag.getAll();
@@ -303,20 +283,18 @@ describe("given executing the 'update' procedure of the 'tag' tRPC router", () =
 
   describe("when providing valid input WITHOUT any 'noteIds' specified", () => {
     test("it should successfully update an existing tag WITHOUT changing 'note' relations", async () => {
-      vi.mock("../trpc", async () => {
-        const actual = await vi.importActual("../trpc");
-
-        /* eslint-disable */
-        return {
-          // @ts-expect-error actual is definitely an object!
-          ...actual,
-          // @ts-expect-error actual is definitely an object!
-          protectedProcedure: actual.publicProcedure, // unprotect a protected tRPC procedure
-        };
-        /* eslint-enable */
+      const user = await prisma.user.upsert({
+        where: { email: "test@test.com" },
+        create: { name: "test", email: "test@test.com", image: "" },
+        update: {},
       });
 
-      const ctx = createInnerTRPCContext({ session: null });
+      const ctx = createInnerTRPCContext({
+        session: {
+          user,
+          expires: "1",
+        },
+      });
       const caller = appRouter.createCaller(ctx);
 
       type Input = inferProcedureInput<AppRouter["tag"]["update"]>;
@@ -335,20 +313,18 @@ describe("given executing the 'update' procedure of the 'tag' tRPC router", () =
 
   describe("when providing valid input WITH 'noteIds' specified", () => {
     test("it should successfully create a new tag WITH all 'note' relations", async () => {
-      vi.mock("../trpc", async () => {
-        const actual = await vi.importActual("../trpc");
-
-        /* eslint-disable */
-        return {
-          // @ts-expect-error actual is definitely an object!
-          ...actual,
-          // @ts-expect-error actual is definitely an object!
-          protectedProcedure: actual.publicProcedure, // unprotect a protected tRPC procedure
-        };
-        /* eslint-enable */
+      const user = await prisma.user.upsert({
+        where: { email: "test@test.com" },
+        create: { name: "test", email: "test@test.com", image: "" },
+        update: {},
       });
 
-      const ctx = createInnerTRPCContext({ session: null });
+      const ctx = createInnerTRPCContext({
+        session: {
+          user,
+          expires: "1",
+        },
+      });
       const caller = appRouter.createCaller(ctx);
 
       type Input = inferProcedureInput<AppRouter["tag"]["update"]>;
@@ -371,20 +347,18 @@ describe("given executing the 'update' procedure of the 'tag' tRPC router", () =
 
   describe("when providing an INVALID tag ID", () => {
     test("it should fail gracefully with an appropriate error message", async () => {
-      vi.mock("../trpc", async () => {
-        const actual = await vi.importActual("../trpc");
-
-        /* eslint-disable */
-        return {
-          // @ts-expect-error actual is definitely an object!
-          ...actual,
-          // @ts-expect-error actual is definitely an object!
-          protectedProcedure: actual.publicProcedure, // unprotect a protected tRPC procedure
-        };
-        /* eslint-enable */
+      const user = await prisma.user.upsert({
+        where: { email: "test@test.com" },
+        create: { name: "test", email: "test@test.com", image: "" },
+        update: {},
       });
 
-      const ctx = createInnerTRPCContext({ session: null });
+      const ctx = createInnerTRPCContext({
+        session: {
+          user,
+          expires: "1",
+        },
+      });
       const caller = appRouter.createCaller(ctx);
 
       type Input = inferProcedureInput<AppRouter["tag"]["update"]>;
@@ -399,20 +373,18 @@ describe("given executing the 'update' procedure of the 'tag' tRPC router", () =
 
   describe("when providing valid input WITH INVALID 'noteIds' specified", () => {
     test("it should fail gracefully with an appropriate error message", async () => {
-      vi.mock("../trpc", async () => {
-        const actual = await vi.importActual("../trpc");
-
-        /* eslint-disable */
-        return {
-          // @ts-expect-error actual is definitely an object!
-          ...actual,
-          // @ts-expect-error actual is definitely an object!
-          protectedProcedure: actual.publicProcedure, // unprotect a protected tRPC procedure
-        };
-        /* eslint-enable */
+      const user = await prisma.user.upsert({
+        where: { email: "test@test.com" },
+        create: { name: "test", email: "test@test.com", image: "" },
+        update: {},
       });
 
-      const ctx = createInnerTRPCContext({ session: null });
+      const ctx = createInnerTRPCContext({
+        session: {
+          user,
+          expires: "1",
+        },
+      });
       const caller = appRouter.createCaller(ctx);
 
       type Input = inferProcedureInput<AppRouter["tag"]["update"]>;
@@ -439,20 +411,18 @@ describe("given executing the 'delete' procedure of the 'tag' tRPC router", () =
 
   describe("when providing valid tag ID", () => {
     test("it should successfully delete the record", async () => {
-      vi.mock("../trpc", async () => {
-        const actual = await vi.importActual("../trpc");
-
-        /* eslint-disable */
-        return {
-          // @ts-expect-error actual is definitely an object!
-          ...actual,
-          // @ts-expect-error actual is definitely an object!
-          protectedProcedure: actual.publicProcedure, // unprotect a protected tRPC procedure
-        };
-        /* eslint-enable */
+      const user = await prisma.user.upsert({
+        where: { email: "test@test.com" },
+        create: { name: "test", email: "test@test.com", image: "" },
+        update: {},
       });
 
-      const ctx = createInnerTRPCContext({ session: null });
+      const ctx = createInnerTRPCContext({
+        session: {
+          user,
+          expires: "1",
+        },
+      });
       const caller = appRouter.createCaller(ctx);
 
       type Input = inferProcedureInput<AppRouter["tag"]["delete"]>;
@@ -469,20 +439,18 @@ describe("given executing the 'delete' procedure of the 'tag' tRPC router", () =
 
   describe("when providing an INVALID tag ID", () => {
     test("it should fail gracefully with an appropriate error message", async () => {
-      vi.mock("../trpc", async () => {
-        const actual = await vi.importActual("../trpc");
-
-        /* eslint-disable */
-        return {
-          // @ts-expect-error actual is definitely an object!
-          ...actual,
-          // @ts-expect-error actual is definitely an object!
-          protectedProcedure: actual.publicProcedure, // unprotect a protected tRPC procedure
-        };
-        /* eslint-enable */
+      const user = await prisma.user.upsert({
+        where: { email: "test@test.com" },
+        create: { name: "test", email: "test@test.com", image: "" },
+        update: {},
       });
 
-      const ctx = createInnerTRPCContext({ session: null });
+      const ctx = createInnerTRPCContext({
+        session: {
+          user,
+          expires: "1",
+        },
+      });
       const caller = appRouter.createCaller(ctx);
 
       type Input = inferProcedureInput<AppRouter["tag"]["delete"]>;
